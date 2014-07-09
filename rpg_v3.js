@@ -1,16 +1,20 @@
 //Hero and enemy character sheets
 var hero = {
-  hp:20,
-	baseHp:20,
-	damage:6,
+    hp: 20,
+    baseHp: 20,
+    mp: 5,
+    baseMp: 5,
+    heal: 5,
+    baseHeal: 5,
+	damage: 6,
 	level: 1,
     //baseDamage added for leveling Damage per level
-	baseDamage:6,
-    //baseAc & baseThac0 for leveling per hero level - AC & THAC0 added to have a hit or miss on attack
-    ac:10,
-    thac0:15,
-    baseAc:10,
-    baseThac0:15
+	baseDamage: 6,
+    //baseAc & baseThac0 for leveling per hero level - AC & THAC) added to have a hit or miss on attack
+    ac: 10,
+    thac0: 15,
+    baseAc: 10,
+    baseThac0: 15
     
 }
 //AC and THAC0 also added in for monsters.
@@ -25,9 +29,9 @@ function Enemy(name, hp, damage, level, ac, thac0) {
 
 var slime = new Enemy('slime', 15, 3, 1, 10, 15);
 var troll = new Enemy('troll', 30, 6, 2, 8, 14);
-var dragon = new Enemy('dragon', 60, 9, 3, 6, 13);
+var dragon = new Enemy('dragon', 50, 9, 3, 6, 13);
 //Added Impossible 4th Boss +++++++++++++++++ NEW FEATURE
-var omega = new Enemy('omega weapon', 9999, 999, 4, 0, 0);
+var omega = new Enemy('omega weapon', 90, 12, 4, 5, 5);
 
 var monster;
 var monsterCodex = [slime, troll, dragon, omega];
@@ -37,9 +41,11 @@ var battle = function () {
     //Make sure action buttons are active
     $('#btn-fight').removeClass().addClass('show');
     $('#btn-run').removeClass().addClass('show');
+    $('#btn-heal').removeClass().addClass('show');
 
     //Total hit points	
     $('#herohp-total').html(hero.hp);
+    $('#heromp-total').html(hero.mp);
     $('#herolevel').html(hero.level);
     $('#monstername').html(monster.name.toUpperCase());
     $('#monsterhp-total').html(monster.hp);
@@ -60,6 +66,14 @@ var battle = function () {
         }
     }
 
+    function displayHeroMP() {
+        if (hero.mp < 1) {
+            $('#heromp').html(0);  //Prevents showing negative MP
+        } else {
+            $('#heromp').html(hero.mp);
+        }
+    }
+
     function displayMonsterHP() {
         if (monster.hp < 1) {
             $('#monsterhp').html(0);  //Prevents showing negative HP
@@ -75,11 +89,44 @@ var battle = function () {
 
     //BEGIN BATTLE
     displayHeroHP();
+    displayHeroMP();
     displayMonsterHP();
 
     $('#battle-text-hero').html("A " + monster.name.toUpperCase() + " approaches!");
     $('#battle-text-enemy').html("");
     $('#battle-text-extra').html("");
+
+    //HEAL
+
+    document.getElementById('btn-heal').onclick = function () {
+        var monsterDamage = Math.random() * monster.damage + 1 | 0;
+        healHero();
+        function healHero() {
+            if (hero.mp >= 5) {
+                hero.hp = hero.hp + hero.heal;
+                hero.mp = hero.mp - 5;
+                hero.hp = hero.hp - monsterDamage;
+                displayHeroHP();
+                displayHeroMP();
+                $('#battle-text-hero').html("You Heal for " + hero.heal + ".");
+                $('#battle-text-enemy').html("");
+                $('#battle-text-enemy').html("The " + monster.name + " attacks for " + monsterDamage + " damage.");
+            } else {
+                $('#battle-text-hero').html("You Don't have enough MP ");
+                $('#battle-text-enemy').html("");
+            }
+              if (hero.hp < 1) {
+                    $('#battle-text-extra').html("YOU ARE DEAD.");
+
+                    $('#btn-fight').removeClass().addClass('hide');
+                    $('#btn-run').removeClass().addClass('hide');
+                    $('#btn-heal').removeClass().addClass('hide');
+                    $('#container').css('background', '#222 none');
+
+                    $('#btn-reload').removeClass().addClass('show')
+                }
+            }		
+    }
 
     //FIGHT
     document.getElementById('btn-fight').onclick = function () {
@@ -150,6 +197,8 @@ var battle = function () {
             hero.damage = hero.baseDamage + (hero.level - 1);
             hero.ac = hero.baseAc - (hero.level - 1);
             hero.thac0 = hero.baseThac0 - (hero.level - 1);
+            hero.mp = hero.baseMp + (5 * (hero.level - 1));
+            hero.heal = hero.baseHeal + (5 * (hero.level - 1));
 
 
             $('#herohp').html(hero.hp);
@@ -163,6 +212,7 @@ var battle = function () {
 
             $('#btn-fight').removeClass().addClass('hide');
             $('#btn-run').removeClass().addClass('hide');
+            $('#btn-heal').removeClass().addClass('hide');
         }
 
         if (monster.hp < 1 && monster.level === monsterCodex.length) {
@@ -172,6 +222,7 @@ var battle = function () {
 
             $('#btn-fight').removeClass().addClass('hide');
             $('#btn-run').removeClass().addClass('hide');
+            $('#btn-heal').removeClass().addClass('hide');
             $('#btn-nextbattle').removeClass().addClass('hide');
             $('#btn-reload').removeClass().addClass('show');
         }
@@ -197,6 +248,7 @@ var battle = function () {
 
                     $('#btn-fight').removeClass().addClass('hide');
                     $('#btn-run').removeClass().addClass('hide');
+                    $('#btn-heal').removeClass().addClass('hide');
                     $('#container').css('background', '#222 none');
 
                     $('#btn-reload').removeClass().addClass('show')
@@ -204,7 +256,7 @@ var battle = function () {
             }
         }, 1500) //1.5 second delay after hero attacks		
     } //end of fight
-}       //end of battle
+}                   //end of battle
 
 //RUN
 $('#btn-run').click(function () {
@@ -219,6 +271,7 @@ $('#btn-run').click(function () {
         $('#battle-text-extra').html("");
         $('#btn-fight').removeClass().addClass('hide');
         $('#btn-run').removeClass().addClass('hide');
+        $('#btn-heal').removeClass().addClass('hide');
 
         $('#btn-reload').removeClass().addClass('show');
         $('#btn-nextbattle').removeClass().addClass('hide');
