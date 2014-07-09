@@ -116,9 +116,10 @@ h3 {font-size:14px; margin-bottom:0}
 #menu input#btn-run {margin-bottom:0}
 
 #btn-fight-wrap,
-#btn-run-wrap {
+#btn-run-wrap,
+#btn-heal-wrap {
 	width:140px;
-	height:55px;
+	height:35px;
 	margin-bottom:8px;
 	background:gray;
 }
@@ -126,12 +127,13 @@ h3 {font-size:14px; margin-bottom:0}
 #btn-run-wrap {margin-bottom:0}
 
 a#btn-fight,
-a#btn-run {
+a#btn-run,
+a#btn-heal {
 	display:block;
 	cursor:pointer;
 	width:140px;
-	height:39px;
-	padding-top:16px;
+	height:19px;
+	padding:5px;
 	font-size:16px;
 	text-decoration:none;
 	text-align:center;
@@ -162,9 +164,9 @@ a#btn-run {
 	background:none;
 }
 
-#attack-animation.hit {background:url(attack.gif) no-repeat 0 0}
+#attack-animation.hit {background:url(attack.png) no-repeat 0 0}
 
-#monster-image.slime {background-color:green}
+#monster-image.slime {background-color:green; background:url(slime.png) no-repeat 0 0}
 #monster-image.slime-attack {background-color:lime}
 
 #monster-image.troll {background:blue}
