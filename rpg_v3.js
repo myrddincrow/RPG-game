@@ -6,7 +6,7 @@ var hero = {
 	level: 1,
     //baseDamage added for leveling Damage per level
 	baseDamage:6,
-    //baseAc & baseThac0 for leveling per hero level - AC & THAC) added to have a hit or miss on attack
+    //baseAc & baseThac0 for leveling per hero level - AC & THAC0 added to have a hit or miss on attack
     ac:10,
     thac0:15,
     baseAc:10,
