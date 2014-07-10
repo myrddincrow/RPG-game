@@ -31,7 +31,7 @@ var slime = new Enemy('slime', 15, 3, 1, 10, 15);
 var troll = new Enemy('troll', 30, 6, 2, 8, 14);
 var dragon = new Enemy('dragon', 50, 9, 3, 6, 13);
 //Added Impossible 4th Boss +++++++++++++++++ NEW FEATURE
-var omega = new Enemy('omega weapon', 90, 12, 4, 5, 5);
+var omega = new Enemy('omega_weapon', 90, 12, 4, 5, 5);
 
 var monster;
 var monsterCodex = [slime, troll, dragon, omega];
