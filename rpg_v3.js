@@ -1,3 +1,8 @@
+// Version 3.0.1
+
+//Hero Name
+var heroName = prompt("Name Your Hero", "");
+
 //Hero and enemy character sheets
 var hero = {
     hp: 20,
@@ -44,6 +49,7 @@ var battle = function () {
     $('#btn-heal').removeClass().addClass('show');
 
     //Total hit points	
+    $('#heroname').html(heroName);
     $('#herohp-total').html(hero.hp);
     $('#heromp-total').html(hero.mp);
     $('#herolevel').html(hero.level);
@@ -57,7 +63,12 @@ var battle = function () {
     //Monster Image
     $('#monster-image').addClass(monster.name);
 
+
     //Battle damage display
+
+    function displayHeroName() {
+        $('#heroname').html(heroName);
+    }
     function displayHeroHP() {
         if (hero.hp < 1) {
             $('#herohp').html(0);  //Prevents showing negative HP
@@ -88,6 +99,7 @@ var battle = function () {
 
 
     //BEGIN BATTLE
+    displayHeroName()
     displayHeroHP();
     displayHeroMP();
     displayMonsterHP();
@@ -108,24 +120,24 @@ var battle = function () {
                 hero.hp = hero.hp - monsterDamage;
                 displayHeroHP();
                 displayHeroMP();
-                $('#battle-text-hero').html("You Heal for " + hero.heal + ".");
+                $('#battle-text-hero').html(heroName + " Heals for " + hero.heal + ".");
                 $('#battle-text-enemy').html("");
-                $('#battle-text-enemy').html("The " + monster.name + " attacks for " + monsterDamage + " damage.");
+                $('#battle-text-enemy').html("The " + monster.name.toUpperCase() + " attacks " + heroName + " for " + monsterDamage + " damage.");
             } else {
-                $('#battle-text-hero').html("You Don't have enough MP ");
-                $('#battle-text-enemy').html("");
+                $('#battle-text-hero').html(heroName + " Doesn't have enough MP ");
+                $('#battle-text-enemy').html(monster.name.toUpperCase() + " laughs at " + heroName + " For Being a NEWB.");
             }
-              if (hero.hp < 1) {
-                    $('#battle-text-extra').html("YOU ARE DEAD.");
+            if (hero.hp < 1) {
+                $('#battle-text-extra').html(heroName + " HAS DIED, GAME OVER!");
 
-                    $('#btn-fight').removeClass().addClass('hide');
-                    $('#btn-run').removeClass().addClass('hide');
-                    $('#btn-heal').removeClass().addClass('hide');
-                    $('#container').css('background', '#222 none');
+                $('#btn-fight').removeClass().addClass('hide');
+                $('#btn-run').removeClass().addClass('hide');
+                $('#btn-heal').removeClass().addClass('hide');
+                $('#container').css('background', '#222 none');
 
-                    $('#btn-reload').removeClass().addClass('show')
-                }
-            }		
+                $('#btn-reload').removeClass().addClass('show')
+            }
+        }
     }
 
     //FIGHT
@@ -151,7 +163,7 @@ var battle = function () {
                 }, 500)
             } else {
                 //If Miss
-                $('#battle-text-hero').html("You miss " + monster.name.toUpperCase() + ".");
+                $('#battle-text-hero').html(heroName + " misses " + monster.name.toUpperCase() + ".");
                 $('#battle-text-enemy').html("");
             }
         }
@@ -167,7 +179,7 @@ var battle = function () {
                 }, 500)
             } else {
                 //If Miss
-                $('#battle-text-hero').html("A " + monster.name.toUpperCase() + " misses you.");
+                $('#battle-text-hero').html("A " + monster.name.toUpperCase() + " misses " + heroName + ".");
                 $('#battle-text-enemy').html("");
             }
         }
@@ -175,10 +187,10 @@ var battle = function () {
         //Will attack be critical? The attack is only critial if you roll the max damage as hero ie: 6 and it will be doubled to 12.	
         if (heroDamage === heroDamageCrit) {
             heroDamage = heroDamage * 2;
-            $('#battle-text-hero').html("CRITICAL HIT! You attack for " + heroDamage + " damage.");
+            $('#battle-text-hero').html("CRITICAL HIT! " + heroName + " attacks for " + heroDamage + " damage.");
             $('#battle-text-enemy').html("");
         } else {
-            $('#battle-text-hero').html("You attack for " + heroDamage + " damage.");
+            $('#battle-text-hero').html(heroName + " attacks for " + heroDamage + " damage.");
             $('#battle-text-enemy').html("");
         }
 
@@ -205,7 +217,7 @@ var battle = function () {
             $('#herohp-total').html(hero.hp);
             $('#herolevel').html(hero.level);
 
-            $('#battle-text-enemy').html("YOU DEFEATED THE " + monster.name.toUpperCase() + " and have reached LEVEL " + hero.level + "!");
+            $('#battle-text-enemy').html(heroName + " HAS DEFEATED THE " + monster.name.toUpperCase() + " and reached LEVEL " + hero.level + "!");
             $('#battle-text-extra').html("Get ready for the next battle!");
             $('#monster-image').removeClass();
             $('#btn-nextbattle').removeClass().addClass('show');
@@ -216,7 +228,7 @@ var battle = function () {
         }
 
         if (monster.hp < 1 && monster.level === monsterCodex.length) {
-            $('#battle-text-enemy').html("YOU DEFEATED THE " + monster.name.toUpperCase() + "!");
+            $('#battle-text-enemy').html(heroName + " HAS DEFEATED THE " + monster.name.toUpperCase() + "!");
             $('#battle-text-extra').html("YOU WIN!!!");
             $('#monster-image').removeClass();
 
@@ -232,9 +244,9 @@ var battle = function () {
             if (monster.hp > 0) {
                 if (monsterDamage === monsterDamageCrit) {
                     monsterDamage = monsterDamage * 2;
-                    $('#battle-text-enemy').html("CRITICAL HIT! The " + monster.name + " attacks for " + monsterDamage + " damage.");
+                    $('#battle-text-enemy').html("CRITICAL HIT! The " + monster.name.toUpperCase() + " attacks " + heroName + " for " + monsterDamage + " damage.");
                 } else {
-                    $('#battle-text-enemy').html("The " + monster.name + " attacks for " + monsterDamage + " damage.");
+                    $('#battle-text-enemy').html("The " + monster.name.toUpperCase() + " attacks " + heroName + " for " + monsterDamage + " damage.");
                 }
 
                 attackHero();
@@ -244,7 +256,7 @@ var battle = function () {
 
                 //If hero dies
                 if (hero.hp < 1) {
-                    $('#battle-text-extra').html("YOU ARE DEAD.");
+                    $('#battle-text-extra').html(heroName + " HAS DIED, GAME OVER!");
 
                     $('#btn-fight').removeClass().addClass('hide');
                     $('#btn-run').removeClass().addClass('hide');
@@ -256,18 +268,18 @@ var battle = function () {
             }
         }, 1500) //1.5 second delay after hero attacks		
     } //end of fight
-}                   //end of battle
+}                     //end of battle
 
 //RUN
 $('#btn-run').click(function () {
 //CANNOT RUN IF YOU ARE FACING OMEGA WEAPON +++++++++++++++++ NEW FEATURE ADDED
     if (monster.name === 'omega weapon') {
-        $('#battle-text-hero').html("Cannot Run, " + monster.name.toUpperCase() + " bars the way.");
+        $('#battle-text-hero').html(heroName + " cannot run, " + monster.name.toUpperCase() + " bars the way.");
         $('#battle-text-enemy').html("");
         $('#battle-text-extra').html("");
     } else {
-        $('#battle-text-hero').html("You run away.");
-        $('#battle-text-enemy').html("");
+        $('#battle-text-hero').html(heroName + " runs away.");
+        $('#battle-text-enemy').html(monster.name.toUpperCase() + " knew you were a coward.");
         $('#battle-text-extra').html("");
         $('#btn-fight').removeClass().addClass('hide');
         $('#btn-run').removeClass().addClass('hide');
