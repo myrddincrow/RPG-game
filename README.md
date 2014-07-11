@@ -18,4 +18,4 @@ New Features added to v3
 Dragons HP Reduced as new system made him a little to hard, and Omega Weapon becomes the last and most difficult boss.
 
 v 3.0.1
-Added Prompt to name your hero, made all text use heroName and added some taunting phrases from mosnters.
+Added Prompt to name your hero, made all text use heroName and added some taunting phrases from monsters.
