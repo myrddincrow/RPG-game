@@ -1,6 +1,6 @@
 // Version 3.0.1
 
-//Hero Name
+//Hero Name (added in 3.0.1)
 var heroName = prompt("Name Your Hero", "");
 
 //Hero and enemy character sheets
@@ -179,7 +179,7 @@ var battle = function () {
                 }, 500)
             } else {
                 //If Miss
-                $('#battle-text-hero').html("A " + monster.name.toUpperCase() + " misses " + heroName + ".");
+                $('#battle-text-hero').html("The " + monster.name.toUpperCase() + " misses " + heroName + ".");
                 $('#battle-text-enemy').html("");
             }
         }
