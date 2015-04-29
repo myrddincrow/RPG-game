@@ -19,8 +19,8 @@ var hero = {
     ac: 10,
     thac0: 15,
     baseAc: 10,
-    baseThac0: 15
-    
+    baseThac0: 15;
+
 }
 //AC and THAC0 also added in for monsters.
 function Enemy(name, hp, damage, level, ac, thac0) {
@@ -48,7 +48,7 @@ var battle = function () {
     $('#btn-run').removeClass().addClass('show');
     $('#btn-heal').removeClass().addClass('show');
 
-    //Total hit points	
+    //Total hit points
     $('#heroname').html(heroName);
     $('#herohp-total').html(hero.hp);
     $('#heromp-total').html(hero.mp);
@@ -184,7 +184,7 @@ var battle = function () {
             }
         }
 
-        //Will attack be critical? The attack is only critial if you roll the max damage as hero ie: 6 and it will be doubled to 12.	
+        //Will attack be critical? The attack is only critial if you roll the max damage as hero ie: 6 and it will be doubled to 12.
         if (heroDamage === heroDamageCrit) {
             heroDamage = heroDamage * 2;
             $('#battle-text-hero').html("CRITICAL HIT! " + heroName + " attacks for " + heroDamage + " damage.");
@@ -266,7 +266,7 @@ var battle = function () {
                     $('#btn-reload').removeClass().addClass('show')
                 }
             }
-        }, 1500) //1.5 second delay after hero attacks		
+        }, 1500) //1.5 second delay after hero attacks
     } //end of fight
 }                     //end of battle
 
@@ -295,7 +295,7 @@ var difficulty = 1;
 
 var difficultyGrid = function() {
 	switch (difficulty) {
-		case 1:		
+		case 1:
 			monster = monsterCodex[0];
 			battle();
 			break;
